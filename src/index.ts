@@ -6,6 +6,7 @@ import coloredConsole from "cli-color";
 
 //
 import rateLimiter from "./config/rate.config";
+import authRoutes from "./routes/auth.routes";
 //For env File
 dotenv.config();
 
@@ -24,6 +25,8 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Server is live");
 });
+
+app.use("/auth", authRoutes);
 
 // launch server
 app.listen(PORT, () => {
