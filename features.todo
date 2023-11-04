@@ -1,8 +1,6 @@
-2. Authentication Middleware
+
 Customize Errors
-3. Get User Id from token on Projects
 4. Add Tests
-5. Setup Static File Server
 6. Integrate Swagger
 7. Validation & Regexp
 8. Add CI/CD

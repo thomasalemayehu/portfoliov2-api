@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { JWTError } from "../errors";
 
 export class JsonWebToken {
   private static SECRET: string | undefined = process.env.SECRET;
@@ -16,7 +17,7 @@ export class JsonWebToken {
       const data:any = jwt.verify(token, this.SECRET);
       return data;
     }catch(e){
-        throw new Error("Malformed JWT");
+        throw new JWTError("Malformed JWT");
     }
   }
 }

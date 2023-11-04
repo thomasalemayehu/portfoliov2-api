@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { JsonWebToken } from "../util/Token.util";
+import { UnAuthenticatedError } from "../errors";
 
-const authenticationMiddleware = async(
+const authenticationMiddleware = async (
   req: any,
   res: Response,
   next: NextFunction
@@ -13,19 +14,16 @@ const authenticationMiddleware = async(
 
     const bearerToken = bearer[1];
 
+    if (!bearerToken) throw new UnAuthenticatedError("Please Login");
+
     const data = await JsonWebToken.verifyToken(bearerToken);
 
-    if(!data) {
-      res.status(401).json({ message: "Please Login" });
-      return;
-    }
+    if (!data) throw new UnAuthenticatedError("Please Login");
 
-    req.verifiedUserId= data.id;
+    req.verifiedUserId = data.id;
 
     next();
-  } else {
-    res.status(401).json({ message: "Please Login" });
-  }
+  } else throw new UnAuthenticatedError("Please Login");
 };
 
 export default authenticationMiddleware;

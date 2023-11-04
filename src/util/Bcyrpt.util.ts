@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { BcryptError } from "../errors";
 
 export class Bcrypt {
   public static async hashValue(value: string):Promise<string> {
@@ -12,7 +13,7 @@ export class Bcrypt {
     try {
       return await bcrypt.compare(value, hash);
     } catch (error) {
-      throw new Error("Values do not match");
+      throw new BcryptError("Values do not match");
     }
   }
 }
