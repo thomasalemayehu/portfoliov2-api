@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Prisma } from "../util/Prisma.util";
 import { RequestWithUserId, RequestWithUserIdAndUploadFile } from "../types";
 import { MissingRequiredAttribute, RequiredEntityNotFound } from "../errors";
+import { Validator } from "../util/Validator.util";
 class ProjectController {
   private static INSTANCE: ProjectController | null = null;
 
@@ -18,7 +19,8 @@ class ProjectController {
   ): Promise<void> {
     const { verifiedUserId } = req;
 
-    if (!verifiedUserId) throw new MissingRequiredAttribute("User Id is required to get projects");
+    if (!verifiedUserId)
+      throw new MissingRequiredAttribute("User Id is required to get projects");
 
     const projects = await Prisma.getInstance().project.findMany({
       where: {
@@ -41,17 +43,28 @@ class ProjectController {
     if (imageFiles) {
       imageLinks = imageFiles.map((image: any) => `uploads/${image.filename}`);
     }
-    if (!verifiedUserId) throw new MissingRequiredAttribute("User Id is required to add projects");
+    if (!verifiedUserId)
+      throw new MissingRequiredAttribute("User Id is required to add projects");
 
     const { title, description, techStack, githubLink, liveLink } = req.body;
 
-    if (!title) throw new MissingRequiredAttribute("Title is required to add projects");
+    if (!title)
+      throw new MissingRequiredAttribute("Title is required to add projects");
     else if (!description)
-      throw new MissingRequiredAttribute("Description is required to add projects");
+      throw new MissingRequiredAttribute(
+        "Description is required to add projects"
+      );
     else if (!techStack)
-      throw new MissingRequiredAttribute("Tech Stack is required to add projects");
+      throw new MissingRequiredAttribute(
+        "Tech Stack is required to add projects"
+      );
     else if (!githubLink)
-      throw new MissingRequiredAttribute("Github Repo Link is required to add projects");
+      throw new MissingRequiredAttribute(
+        "Github Repo Link is required to add projects"
+      );
+
+    Validator.validateURL(githubLink);
+    Validator.validateURL(liveLink);
 
     const newProject = await Prisma.getInstance().project.create({
       data: {
@@ -75,9 +88,12 @@ class ProjectController {
     const { verifiedUserId } = req;
     const { projectId } = req.params;
 
-    if (!verifiedUserId) throw new MissingRequiredAttribute("User Id is required to get projects");
+    if (!verifiedUserId)
+      throw new MissingRequiredAttribute("User Id is required to get projects");
     else if (!projectId)
-      throw new MissingRequiredAttribute("Project Id is required to get projects");
+      throw new MissingRequiredAttribute(
+        "Project Id is required to get projects"
+      );
 
     const project = await Prisma.getInstance().project.findFirst({
       where: {
@@ -96,9 +112,12 @@ class ProjectController {
     const { projectId } = req.params;
     const { verifiedUserId } = req;
 
-    if (!verifiedUserId) throw new MissingRequiredAttribute("User Id is required to get projects");
+    if (!verifiedUserId)
+      throw new MissingRequiredAttribute("User Id is required to get projects");
     else if (!projectId)
-      throw new MissingRequiredAttribute("Project Id is required to get projects");
+      throw new MissingRequiredAttribute(
+        "Project Id is required to get projects"
+      );
 
     const imageFiles = req.files;
 
@@ -113,9 +132,15 @@ class ProjectController {
     if (title) updateProjectInfo.title = title;
     if (description) updateProjectInfo.description = description;
     if (techStack) updateProjectInfo.techStack = techStack;
-    if (githubLink) updateProjectInfo.githubLink = githubLink;
+    if (githubLink) {
+      updateProjectInfo.githubLink = githubLink;
+      Validator.validateURL(githubLink);
+    }
     if (imageLinks) updateProjectInfo.imageLinks = imageLinks;
-    if (liveLink) updateProjectInfo.liveLink = liveLink;
+    if (liveLink){
+      updateProjectInfo.liveLink = liveLink;
+      Validator.validateURL(liveLink);
+    }
 
     const updatedProject = await Prisma.getInstance().project.update({
       where: { id: projectId, ownerId: verifiedUserId },
@@ -133,9 +158,12 @@ class ProjectController {
 
     const { verifiedUserId } = req;
 
-    if (!verifiedUserId) throw new MissingRequiredAttribute("User Id is required to get projects");
+    if (!verifiedUserId)
+      throw new MissingRequiredAttribute("User Id is required to get projects");
     else if (!projectId)
-      throw new MissingRequiredAttribute("Project Id is required to get projects");
+      throw new MissingRequiredAttribute(
+        "Project Id is required to get projects"
+      );
 
     const project = await Prisma.getInstance().project.findFirst({
       where: {

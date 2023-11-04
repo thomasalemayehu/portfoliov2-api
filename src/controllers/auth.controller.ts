@@ -3,6 +3,7 @@ import { Prisma } from "../util/Prisma.util";
 import { JsonWebToken } from "../util/Token.util";
 import { Bcrypt } from "../util/Bcyrpt.util";
 import { InvalidCredentials, MissingRequiredAttribute } from "../errors";
+import { Validator } from "../util/Validator.util";
 
 class AuthController {
   private static INSTANCE: AuthController | null = null;
@@ -28,6 +29,10 @@ class AuthController {
     else if (!name)
       throw new MissingRequiredAttribute("Name is required to register");
 
+    Validator.validateEmail(email);
+    Validator.validatePassword(password);
+    Validator.validateName(name);
+
     const hashedPassword = await Bcrypt.hashValue(password);
     const newUser = await Prisma.getInstance().user.create({
       data: {
@@ -49,6 +54,9 @@ class AuthController {
       throw new MissingRequiredAttribute("Email is required to login");
     else if (!password)
       throw new MissingRequiredAttribute("Password is required to login");
+
+    Validator.validateEmail(email);
+    Validator.validatePassword(password);
 
     const possibleUser = await Prisma.getInstance().user.findFirst({
       where: { email: email },
@@ -89,6 +97,10 @@ class AuthController {
       throw new MissingRequiredAttribute("Password is required to change");
     else if (!newPassword)
       throw new MissingRequiredAttribute("New Password is required to change");
+
+    Validator.validateEmail(email);
+    Validator.validatePassword(password);
+    Validator.validatePassword(newPassword);
 
     const possibleUser = await Prisma.getInstance().user.findFirst({
       where: { email: email },

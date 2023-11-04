@@ -1,7 +1,7 @@
-1. Add Tests
-2. Integrate Swagger
-3. Validation & Regexp
-4. Add CI/CD
-5. Containerize
-6. Host
+1. Validation & Regexp
+2. Add Tests
+3. Add CI/CD
+4. Containerize
+5. Host
+6. Integrate Swagger
 7. Uploaded File clean up schedule

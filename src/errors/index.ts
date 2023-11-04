@@ -16,7 +16,6 @@ export class MissingRequiredAttribute extends Error {
   }
 }
 
-
 export class RequiredEntityNotFound extends Error {
   constructor(message: string) {
     super(message);
@@ -28,7 +27,6 @@ export class ErrorProcessingFile extends Error {
     super(message);
   }
 }
-
 
 export class JWTError extends Error {
   constructor(message: string) {
@@ -42,10 +40,13 @@ export class BcryptError extends Error {
   }
 }
 
-
 export class InvalidCredentials extends Error {
   constructor(message: string) {
     super(message);
   }
 }
-
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
