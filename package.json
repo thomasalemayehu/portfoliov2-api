@@ -42,7 +42,10 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
-    "run-all": "^1.0.1"
+    "chai": "^4.3.10",
+    "concurrently": "^8.2.2",
+    "mocha": "^10.2.0",
+    "prisma": "^5.5.2",
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
@@ -51,10 +54,6 @@
     "@types/express": "^4.17.20",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/mocha": "^10.0.3",
-    "chai": "^4.3.10",
-    "concurrently": "^8.2.2",
-    "mocha": "^10.2.0",
-    "prisma": "^5.5.2",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
