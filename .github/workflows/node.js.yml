@@ -19,5 +19,9 @@ jobs:
       - name: Run Docker
         run: docker compose up -d
 
+
+      - name: Migrate Prisma
+        run: npm run migrate
+
       - name: Run test
         run: npm test
