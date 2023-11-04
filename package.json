@@ -4,7 +4,8 @@
   "description": "A RESTful API for personal portfolio website.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --exit -r ts-node/register src/**/*.test.ts",
+    "test:full": "concurrently \"docker compose up -d\" \"mocha --exit -r ts-node/register src/**/*.test.ts\"",
     "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "nodemon ./src/index.ts",
@@ -28,6 +29,7 @@
     "@types/multer": "^1.4.9",
     "@types/node": "^20.8.10",
     "bcrypt": "^5.1.1",
+    "chai-http": "^4.4.0",
     "cli-color": "^2.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -39,14 +41,21 @@
     "mongoose": "^7.6.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "run-all": "^1.0.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
+    "@types/chai": "^4.3.9",
     "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
     "@types/jsonwebtoken": "^9.0.4",
+    "@types/mocha": "^10.0.3",
+    "chai": "^4.3.10",
+    "concurrently": "^8.2.2",
+    "mocha": "^10.2.0",
     "prisma": "^5.5.2",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }

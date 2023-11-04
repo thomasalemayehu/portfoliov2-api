@@ -16,7 +16,7 @@ export class Validator {
   }
 
   public static validateName(name: string): void {
-    const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+    const nameRegex = /^[A-Za-z]{3,}\s[A-Za-z]{3,}$/;
     if (!nameRegex.test(name))
       throw new ValidationError(
         `${name} is not a valid name`

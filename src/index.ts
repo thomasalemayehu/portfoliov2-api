@@ -45,3 +45,6 @@ app.listen(PORT, () => {
     coloredConsole.bgGreen.black.italic(` Sever is live at ${PORT} ...`)
   );
 });
+
+
+export default app;
