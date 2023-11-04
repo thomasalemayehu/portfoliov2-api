@@ -25,12 +25,19 @@ class ProjectController {
     res.status(200).json(projects);
   }
 
-  public async addProject(req: Request, res: Response): Promise<void> {
+  public async addProject(req: any, res: Response): Promise<void> {
+   
     const { userId } = req.params;
 
+    const imageFiles = req.files;
+
+    let imageLinks:Array<string> = [];
+    if(imageFiles){
+      imageLinks = imageFiles.map((image: any) => `uploads/${image.filename}`);
+    }
     if (!userId) throw new Error("User Id is required to add projects");
 
-    const { title, description, techStack, githubLink, imageLinks, liveLink } =
+    const { title, description, techStack, githubLink, liveLink } =
       req.body;
 
     if (!title) throw new Error("Title is required to add projects");
@@ -40,8 +47,7 @@ class ProjectController {
       throw new Error("Tech Stack is required to add projects");
     else if (!githubLink)
       throw new Error("Github Repo Link is required to add projects");
-    else if (!imageLinks)
-      throw new Error("Image Links are required to add projects");
+    
 
     const newProject = await Prisma.getInstance().project.create({
       data: {
@@ -77,14 +83,23 @@ class ProjectController {
     res.status(200).json(project);
   }
 
-  public async updateProject(req: Request, res: Response): Promise<void> {
+  public async updateProject(req: any, res: Response): Promise<void> {
     const { userId, projectId } = req.params;
 
     if (!userId) throw new Error("User Id is required to get projects");
     else if (!projectId)
       throw new Error("Project Id is required to get projects");
 
-    const { title, description, techStack, githubLink, imageLinks, liveLink } =
+       const imageFiles = req.files;
+
+       let imageLinks: Array<string> = [];
+       if (imageFiles) {
+         imageLinks = imageFiles.map(
+           (image: any) => `uploads/${image.filename}`
+         );
+       }
+
+    const { title, description, techStack, githubLink, liveLink } =
       req.body;
 
     const updateProjectInfo: Record<string, any> = {};

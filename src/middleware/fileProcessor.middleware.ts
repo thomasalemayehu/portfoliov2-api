@@ -1,13 +1,21 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
+import multer, { Multer, MulterError } from "multer";
+import path from "path";
+import upload from "../config/multer.config";
 
 const fileProcessorMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  console.log("Processing File....");
-
-  next();
+  upload: Multer,
+  identifier: string
+): RequestHandler => {
+  return (req, res, next) => {
+    const result = upload.array(identifier)(req, res, (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ error: "File upload failed." });
+      }
+      next();
+    });
+  };
 };
 
 export default fileProcessorMiddleware;

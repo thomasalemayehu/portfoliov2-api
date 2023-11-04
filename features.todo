@@ -5,3 +5,7 @@
 5. Setup Static File Server
 6. Integrate Swagger
 7. Validation & Regexp
+8. Add CI/CD
+9. Containerize
+10. Host
+11. Uploaded File clean up schedule
