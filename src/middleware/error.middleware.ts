@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { type } from "os";
-import { BcryptError, ErrorProcessingFile, InvalidCredentials, JWTError, MissingRequiredAttribute, RequiredEntityNotFound, UnAuthenticatedError, UnAuthorizedError } from "../errors";
+import {
+  BcryptError,
+  ErrorProcessingFile,
+  InvalidCredentials,
+  JWTError,
+  MissingRequiredAttribute,
+  RequiredEntityNotFound,
+  UnAuthenticatedError,
+  UnAuthorizedError,
+} from "../errors";
 
 const errorMiddleware = (
   err: Error,
@@ -8,25 +17,37 @@ const errorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  if (err instanceof UnAuthenticatedError) {
-    console.log("Unauthenticated");
+  if (
+    err instanceof UnAuthenticatedError ||
+    err instanceof JWTError ||
+    err instanceof InvalidCredentials
+  ) {
+    res.status(401).json({ message: "Please Login" });
+    return;
   } else if (err instanceof UnAuthorizedError) {
-    console.log("Unauthorized");
+    res.status(403).json({ message: "Please Login" });
+    return;
   } else if (err instanceof MissingRequiredAttribute) {
-    console.log("MissingRequiredAttribute");
+    res.status(400).json({ message: err.message });
+    return;
   } else if (err instanceof RequiredEntityNotFound) {
-    console.log("RequiredEntityNotFound");
+    res.status(404).json({ message: err.message });
+    return;
   } else if (err instanceof ErrorProcessingFile) {
-    console.log("ErrorProcessingFile");
-  } else if (err instanceof JWTError) {
-    console.log("JWTError");
+    res.status(400).json({ message: "Bad file try again" });
+    return;
   } else if (err instanceof BcryptError) {
-    console.log("BcryptError");
-  } else if (err instanceof InvalidCredentials) {
-    console.log("InvalidCredentials");
+    res
+      .status(500)
+      .json({ message: "We are having issues. Please try again later!" });
+    return;
+  } else {
+    console.log(err);
   }
 
-  res.status(500).json();
+  res
+    .status(500)
+    .json({ message: "We are having issues. Please try again later!" });
 };
 
 export default errorMiddleware;
