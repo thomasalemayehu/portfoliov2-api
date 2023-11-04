@@ -6,14 +6,14 @@ import upload from "../config/multer.config";
 const router: Router = express.Router();
 const projectController = ProjectController.getInstance();
 
-router.get("/:userId", projectController.getProjects);
-router.post("/:userId", fileProcessorMiddleware(upload,"images"), projectController.addProject);
-router.get("/:userId/:projectId", projectController.getProject);
+router.get("/", projectController.getProjects);
+router.post("/", fileProcessorMiddleware(upload,"images"), projectController.addProject);
+router.get("/:projectId", projectController.getProject);
 router.patch(
-  "/:userId/:projectId",
+  "/:projectId",
   fileProcessorMiddleware(upload,"images"),
   projectController.updateProject
 );
-router.delete("/:userId/:projectId", projectController.deleteProject);
+router.delete("/:projectId", projectController.deleteProject);
 
 export default router;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Prisma } from "../util/Prisma.util";
-
+import { RequestWithUserId, RequestWithUserIdAndUploadFile } from "../types";
 class ProjectController {
   private static INSTANCE: ProjectController | null = null;
 
@@ -11,34 +11,38 @@ class ProjectController {
     return this.INSTANCE;
   }
 
-  public async getProjects(req: Request, res: Response): Promise<void> {
-    const { userId } = req.params;
+  public async getProjects(
+    req: RequestWithUserId,
+    res: Response
+  ): Promise<void> {
+    const { verifiedUserId } = req;
 
-    if (!userId) throw new Error("User Id is required to get projects");
+    if (!verifiedUserId) throw new Error("User Id is required to get projects");
 
     const projects = await Prisma.getInstance().project.findMany({
       where: {
-        ownerId: userId,
+        ownerId: verifiedUserId,
       },
     });
 
     res.status(200).json(projects);
   }
 
-  public async addProject(req: any, res: Response): Promise<void> {
-   
-    const { userId } = req.params;
+  public async addProject(
+    req: RequestWithUserIdAndUploadFile,
+    res: Response
+  ): Promise<void> {
+    const { verifiedUserId } = req.params;
 
     const imageFiles = req.files;
 
-    let imageLinks:Array<string> = [];
-    if(imageFiles){
+    let imageLinks: Array<string> = [];
+    if (imageFiles) {
       imageLinks = imageFiles.map((image: any) => `uploads/${image.filename}`);
     }
-    if (!userId) throw new Error("User Id is required to add projects");
+    if (!verifiedUserId) throw new Error("User Id is required to add projects");
 
-    const { title, description, techStack, githubLink, liveLink } =
-      req.body;
+    const { title, description, techStack, githubLink, liveLink } = req.body;
 
     if (!title) throw new Error("Title is required to add projects");
     else if (!description)
@@ -47,7 +51,6 @@ class ProjectController {
       throw new Error("Tech Stack is required to add projects");
     else if (!githubLink)
       throw new Error("Github Repo Link is required to add projects");
-    
 
     const newProject = await Prisma.getInstance().project.create({
       data: {
@@ -57,24 +60,28 @@ class ProjectController {
         githubLink,
         imageLinks,
         liveLink,
-        ownerId: userId,
+        ownerId: verifiedUserId,
       },
     });
 
     res.status(201).json(newProject);
   }
 
-  public async getProject(req: Request, res: Response): Promise<void> {
-    const { userId, projectId } = req.params;
+  public async getProject(
+    req: RequestWithUserId,
+    res: Response
+  ): Promise<void> {
+    const { verifiedUserId } = req;
+    const { projectId } = req.params;
 
-    if (!userId) throw new Error("User Id is required to get projects");
+    if (!verifiedUserId) throw new Error("User Id is required to get projects");
     else if (!projectId)
       throw new Error("Project Id is required to get projects");
 
     const project = await Prisma.getInstance().project.findFirst({
       where: {
         id: projectId,
-        ownerId: userId,
+        ownerId: verifiedUserId,
       },
     });
 
@@ -83,24 +90,25 @@ class ProjectController {
     res.status(200).json(project);
   }
 
-  public async updateProject(req: any, res: Response): Promise<void> {
-    const { userId, projectId } = req.params;
+  public async updateProject(
+    req: RequestWithUserIdAndUploadFile,
+    res: Response
+  ): Promise<void> {
+    const { projectId } = req.params;
+    const { verifiedUserId } = req;
 
-    if (!userId) throw new Error("User Id is required to get projects");
+    if (!verifiedUserId) throw new Error("User Id is required to get projects");
     else if (!projectId)
       throw new Error("Project Id is required to get projects");
 
-       const imageFiles = req.files;
+    const imageFiles = req.files;
 
-       let imageLinks: Array<string> = [];
-       if (imageFiles) {
-         imageLinks = imageFiles.map(
-           (image: any) => `uploads/${image.filename}`
-         );
-       }
+    let imageLinks: Array<string> = [];
+    if (imageFiles) {
+      imageLinks = imageFiles.map((image: any) => `uploads/${image.filename}`);
+    }
 
-    const { title, description, techStack, githubLink, liveLink } =
-      req.body;
+    const { title, description, techStack, githubLink, liveLink } = req.body;
 
     const updateProjectInfo: Record<string, any> = {};
     if (title) updateProjectInfo.title = title;
@@ -111,31 +119,36 @@ class ProjectController {
     if (liveLink) updateProjectInfo.liveLink = liveLink;
 
     const updatedProject = await Prisma.getInstance().project.update({
-      where: { id: projectId, ownerId: userId },
+      where: { id: projectId, ownerId: verifiedUserId },
       data: updateProjectInfo,
     });
 
     res.status(200).json(updatedProject);
   }
-  
-  public async deleteProject(req: Request, res: Response): Promise<void> {
-    const { userId, projectId } = req.params;
 
-    if (!userId) throw new Error("User Id is required to get projects");
+  public async deleteProject(
+    req: RequestWithUserId,
+    res: Response
+  ): Promise<void> {
+    const { projectId } = req.params;
+
+    const { verifiedUserId } = req;
+
+    if (!verifiedUserId) throw new Error("User Id is required to get projects");
     else if (!projectId)
       throw new Error("Project Id is required to get projects");
 
     const project = await Prisma.getInstance().project.findFirst({
       where: {
         id: projectId,
-        ownerId: userId,
+        ownerId: verifiedUserId,
       },
     });
 
     if (!project) throw new Error("Project not found");
 
     await Prisma.getInstance().project.delete({
-      where: { id: projectId, ownerId: userId },
+      where: { id: projectId, ownerId: verifiedUserId },
     });
 
     res.status(200).json(project);

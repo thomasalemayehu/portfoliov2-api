@@ -12,5 +12,11 @@ export class JsonWebToken {
 
   public static async verifyToken(token: string) {
     if (!this.SECRET) throw new Error("Secret Token for JWT not setup in ENV");
+    try{
+      const data:any = jwt.verify(token, this.SECRET);
+      return data;
+    }catch(e){
+        throw new Error("Malformed JWT");
+    }
   }
 }

@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import { JsonWebToken } from "../util/Token.util";
 
-const authenticationMiddleware = (
-  req: Request,
+const authenticationMiddleware = async(
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -12,11 +13,14 @@ const authenticationMiddleware = (
 
     const bearerToken = bearer[1];
 
-    // verify token
+    const data = await JsonWebToken.verifyToken(bearerToken);
 
-    // add user id to request
+    if(!data) {
+      res.status(401).json({ message: "Please Login" });
+      return;
+    }
 
-    // req.token = bearerToken;
+    req.verifiedUserId= data.id;
 
     next();
   } else {

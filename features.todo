@@ -1,5 +1,5 @@
-1. File Processing Middleware
 2. Authentication Middleware
+Customize Errors
 3. Get User Id from token on Projects
 4. Add Tests
 5. Setup Static File Server
