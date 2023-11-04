@@ -4,7 +4,7 @@
   "description": "A RESTful API for personal portfolio website.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit -r ts-node/register src/**/*.test.ts",
+    "test": "concurrently \"docker compose up -d\" \"mocha --exit -r ts-node/register src/**/*.test.ts\"",
     "test:full": "concurrently \"docker compose up -d\" \"mocha --exit -r ts-node/register src/**/*.test.ts\"",
     "build": "npx tsc",
     "start": "node dist/index.js",
