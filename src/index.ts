@@ -3,15 +3,18 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import coloredConsole from "cli-color";
-
+import "express-async-errors"
 //
 import rateLimiter from "./config/rate.config";
 import authRoutes from "./routes/auth.routes";
+import projectRoutes from "./routes/project.routes";
 //For env File
 dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;
+
+import errorMiddleware  from "./middleware/error.middleware";
 
 // use middlewares
 app.use(rateLimiter);
@@ -27,6 +30,10 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/projects",projectRoutes)
+
+app.use(errorMiddleware);
+
 
 // launch server
 app.listen(PORT, () => {

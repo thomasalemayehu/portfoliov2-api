@@ -1,11 +1,13 @@
-version: '3.7'
-services:
-  mongodb_container:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodb_data_container:/data/db
+version: '3.9'
 
-volumes:
-  mongodb_data_container:
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=StrongPass123
+      - POSTGRES_USER=projects
+      - POSTGRES_DB=projects
