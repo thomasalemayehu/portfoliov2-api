@@ -20,6 +20,12 @@ jobs:
         run: docker compose up -d
 
 
+      - name: Wait for Postgres
+        run: sleep 10
+
+      - name: Check Postgres Container Logs
+        run: docker-compose logs postgres
+
       - name: Migrate Prisma
         run: npm run migrate
 
