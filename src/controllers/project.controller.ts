@@ -1,8 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Prisma } from "../util/Prisma.util";
 import { RequestWithUserId, RequestWithUserIdAndUploadFile } from "../types";
 import { MissingRequiredAttribute, RequiredEntityNotFound } from "../errors";
 import { Validator } from "../util/Validator.util";
+
+// import upload from "../config/multer.config";
 class ProjectController {
   private static INSTANCE: ProjectController | null = null;
 
@@ -33,21 +35,35 @@ class ProjectController {
 
   public async addProject(
     req: RequestWithUserIdAndUploadFile,
-    res: Response
+    res: Response,
+    next: NextFunction
   ): Promise<void> {
-    const { verifiedUserId } = req.params;
+    let { verifiedUserId } = req.params;
+  
+    const imageFiles = req.files as { selectedImages: any; leadImage: any };
 
-    const imageFiles = req.files;
+    console.log(imageFiles);
 
     let imageLinks: Array<string> = [];
+    let leadImage:string = "";
     if (imageFiles) {
-      imageLinks = imageFiles.map((image: any) => `uploads/${image.filename}`);
+      imageLinks = imageFiles.selectedImages.map((image: any) => `uploads/${image.filename}`);
+      leadImage = `uploads/${imageFiles.leadImage.filename}`;
     }
+    verifiedUserId = "closm76tm0000uv39nvwvbhjr";
     if (!verifiedUserId)
       throw new MissingRequiredAttribute("User Id is required to add projects");
 
-    const { title, description, techStack, githubLink, liveLink } = req.body;
+    const {
+      title,
+      description,
+      techStack,
+      githubLink,
+      liveLink,
+      projectType,
+    } = req.body;
 
+    console.log(techStack);
     if (!title)
       throw new MissingRequiredAttribute("Title is required to add projects");
     else if (!description)
@@ -63,6 +79,8 @@ class ProjectController {
         "Github Repo Link is required to add projects"
       );
 
+    // const techStackArr = techStack.split(",");
+
     Validator.validateURL(githubLink);
     Validator.validateURL(liveLink);
 
@@ -70,10 +88,12 @@ class ProjectController {
       data: {
         title,
         description,
-        techStack,
+        leadImage,
+        techStack: techStack.split(","),
         githubLink,
         imageLinks,
         liveLink,
+        projectType,
         ownerId: verifiedUserId,
       },
     });
@@ -119,14 +139,22 @@ class ProjectController {
         "Project Id is required to get projects"
       );
 
-    const imageFiles = req.files;
+    const imageFiles = req.selectedImages;
 
     let imageLinks: Array<string> = [];
     if (imageFiles) {
       imageLinks = imageFiles.map((image: any) => `uploads/${image.filename}`);
     }
 
-    const { title, description, techStack, githubLink, liveLink } = req.body;
+    const {
+      title,
+      description,
+      techStack,
+      githubLink,
+      liveLink,
+      leadImage,
+      projectType,
+    } = req.body;
 
     const updateProjectInfo: Record<string, any> = {};
     if (title) updateProjectInfo.title = title;
@@ -137,10 +165,13 @@ class ProjectController {
       Validator.validateURL(githubLink);
     }
     if (imageLinks) updateProjectInfo.imageLinks = imageLinks;
-    if (liveLink){
+    if (liveLink) {
       updateProjectInfo.liveLink = liveLink;
       Validator.validateURL(liveLink);
     }
+    if (leadImage) updateProjectInfo.leadImage = leadImage;
+
+    if (projectType) updateProjectInfo.projectType = projectType;
 
     const updatedProject = await Prisma.getInstance().project.update({
       where: { id: projectId, ownerId: verifiedUserId },

@@ -1,13 +1,20 @@
-import { Request } from "express"
+import { Request } from "express";
 
-export interface RequestWithUserId extends Request{
-    verifiedUserId?:string,
+export interface RequestWithUserId extends Request {
+  verifiedUserId?: string;
 }
-export interface RequestWithUploadFile extends Request{
-    files?:Array<any>,
+export interface RequestWithUploadFile extends Request {
+  leadImage?: any;
+  selectedImages?: Array<any>;
 }
 
 export interface RequestWithUserIdAndUploadFile extends Request {
-    verifiedUserId?: string,
-    files?:any,
+  verifiedUserId?: string;
+  leadImage?: any;
+  selectedImages?: any;
+}
+
+export interface FileUploadArguments{
+  name:string,
+  maxCount?:number,
 }

@@ -19,14 +19,17 @@ const errorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(err);
   if (
     err instanceof UnAuthenticatedError ||
-    err instanceof JWTError ||
-    err instanceof InvalidCredentials
+    err instanceof JWTError 
   ) {
     res.status(401).json({ message: "Please Login" });
     return;
-  } else if (err instanceof UnAuthorizedError) {
+  } else if( err instanceof InvalidCredentials){
+    res.status(401).json({ message: "Invalid Credentials" });
+
+  }else if (err instanceof UnAuthorizedError) {
     res.status(403).json({ message: "Please Login" });
     return;
   } else if (err instanceof MissingRequiredAttribute) {
@@ -50,7 +53,7 @@ const errorMiddleware = (
     res.status(400).json({ message: err.message });
     return;
   } else {
-    console.log(err.name);
+    console.log(err);
   }
 
   res

@@ -21,9 +21,11 @@ model Project {
   title       String
   description String
   techStack   String[]
+  leadImage   String
   githubLink  String
   imageLinks  String[]
   liveLink    String?
+  projectType String
   ownerId     String
   owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

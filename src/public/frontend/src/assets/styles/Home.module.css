@@ -1,0 +1,203 @@
+.container {
+  min-height: 100vh;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  scroll-snap-align: start;
+}
+
+.left__container {
+  width: 100%;
+  margin: auto 0;
+}
+.left__container p:nth-of-type(1) {
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  font-family: var(--heading-font);
+  letter-spacing: 1.5px;
+}
+.left__container h1 {
+  text-transform: capitalize;
+  font-size: 3rem;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-family: var(--sub-heading-font);
+}
+
+.left__container h1 span {
+  color: var(--accent-color);
+  font-size: 2.5rem;
+}
+.left__container h2 {
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  font-family: var(--sub-heading-font);
+}
+.left__container p:nth-of-type(2) {
+  margin-bottom: 50px;
+  line-height: 1.6;
+  font-family: var(--secondary-font);
+  font-size: 1em;
+  letter-spacing: 1px;
+}
+
+.right__container {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* 
+    =============================================
+    Responsive Design
+    =============================================
+*/
+
+/* 577 - 768 */
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .left__container {
+    width: 85%;
+    margin-left: 0;
+    margin-right: 15%;
+  }
+  .left__container p:nth-of-type(1) {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+  .left__container h1 {
+    font-size: 3.4em;
+    letter-spacing: 2px;
+  }
+  .left__container h2 {
+    font-size: 1.3rem;
+  }
+  .left__container p:nth-of-type(2) {
+    font-size: 1em;
+  }
+}
+
+/* 769 - 992 */
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .left__container {
+    width: 80%;
+    margin-left: 0;
+    margin-right: 20%;
+  }
+  .left__container p:nth-of-type(1) {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+  .left__container h1 {
+    font-size: 3.5em;
+    letter-spacing: 2px;
+  }
+  .left__container h2 {
+    font-size: 1.4rem;
+  }
+  .left__container p:nth-of-type(2) {
+    font-size: 1em;
+  }
+}
+
+/* 993 - 1200 */
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .left__container {
+    width: 75%;
+    margin-left: 0;
+    margin-right: 25%;
+  }
+  .left__container p:nth-of-type(1) {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+  .left__container h1 {
+    font-size: 3.6em;
+    letter-spacing: 2px;
+  }
+  .left__container h2 {
+    font-size: 1.5rem;
+  }
+  .left__container p:nth-of-type(2) {
+    font-size: 1.05em;
+  }
+}
+
+/* 1201 - 1400 */
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+  .container {
+    min-height: 95vh;
+  }
+  .left__container {
+    width: 60%;
+  }
+  .left__container p:nth-of-type(1) {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+  .left__container h1 {
+    font-size: 3em;
+    letter-spacing: 2px;
+  }
+  .left__container h2 {
+    font-size: 1.2rem;
+  }
+  .left__container p:nth-of-type(2) {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .right__container {
+    display: inline;
+    width: 35%;
+    margin-left: 5%;
+    height: 450px;
+    background: url("../public/assets/images/Landing-Page-Image.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+/* More than 1401px */
+@media only screen and (min-width: 1401px) {
+  .container {
+    min-height: 90vh;
+  }
+  .left__container {
+    width: 60%;
+  }
+  .left__container p:nth-of-type(1) {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+  .left__container h1 {
+    font-size: 3em;
+    letter-spacing: 2px;
+  }
+  .left__container h2 {
+    font-size: 1.2rem;
+  }
+  .left__container p:nth-of-type(2) {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .right__container {
+    display: inline;
+    width: 35%;
+    margin-left: 0%;
+    height: 550px;
+    background: url("/img/Landing-Page-Image.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .left__container a {
+    margin-top: 36px;
+  }
+}

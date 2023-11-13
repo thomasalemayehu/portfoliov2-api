@@ -9,6 +9,7 @@ const storage = multer.diskStorage({
     file: Express.Multer.File,
     cb: (error: Error | null, destination: string) => void
   ) => {
+    console.log("Saving file...")
     const uploadFolderPath = path.join(__dirname, "../public/uploads/");
 
     if (!fs.existsSync(uploadFolderPath)) {

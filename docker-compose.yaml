@@ -1,13 +1,17 @@
-version: '3.9'
+version: '3.8'
 
 services:
   postgres:
-    image: postgres:14-alpine
+    image: postgres:alpine
+    container_name: my_postgres_container
+    environment:
+      POSTGRES_DB: projects
+      POSTGRES_USER: projects
+      POSTGRES_PASSWORD: StrongPass123
     ports:
       - 5432:5432
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=StrongPass123
-      - POSTGRES_USER=projects
-      - POSTGRES_DB=projects
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

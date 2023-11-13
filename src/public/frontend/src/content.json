@@ -1,0 +1,47 @@
+{
+  "homePageIntroduction": "HOWDY-DOODY!🙃 I'M",
+  "fullName": "Thomas Mechessa",
+  "homePageLabel": "FULL STACK DEVELOPER(JAVA & JAVASCRIPT)",
+  "homePageDescription": "As a highly passionate, creative, and detail-oriented full stack developer, I possess the expertise to craft robust, scalable, and high-performance backend solutions. I excel in creating exceptional, responsive, and imaginative digital experiences that captivate users, even under the pressure of tight deadlines. My dedication to delivering excellence and my ability to seamlessly bridge the gap between backend and frontend development make me an invaluable asset to any project or team.",
+  "aboutPageContent": "I am a highly motivated, detail-oriented, tech-savvy, and organized engineer, I thrive in fast-paced environments and excel at meeting tight deadlines. My commitment to producing high-quality work is reflected in my meticulous approach to coding and problem-solving. I am not just a solitary developer; I am also a passionate team player. My strong communication skills enable me to collaborate effectively with cross-functional teams. I am dedicated to contributing to a company's success. With a solid educational foundation, experience and a strong work ethic, I am excited to embark on new challenges and make meaningful contributions as a full-stack developer.",
+  "aboutPageTimeline": [
+    {
+      "title": "Born Day🎂",
+      "timeline": "February 14th , 2000",
+      "description": ""
+    },
+    { "title": "Doing Stuff👶", "timeline": "2000 - 2004", "description": "" },
+    {
+      "title": "Hill Side School",
+      "timeline": "2004 - 2018",
+      "description": "Started from pre-school onto middle school and high school at the same institution. I consider that place my home. That is where I learned most of my soft skills such as communication, dedication, hard work and discipline. I also have some of my best memories and friends there."
+    },
+    {
+      "title": "Meseret Humanitarian Organization",
+      "timeline": " Jul 2017 - Sep 2017",
+      "description": " Part of a group that sold tickets as donation and collected in kind donations for the “One Pack for One Child” Project, preparing school essential packs for children of economically weak families."
+    },
+    {
+      "title": " Nehemiah Autism Centre",
+      "timeline": "Jul 2018 - Sep 2018",
+      "description": "Spend some time with autistic children. Teach them to adapt to new people, improve communication with people and learn to focus and read."
+    },
+    {
+      "title": "Jersuma Trading P.L.C",
+      "timeline": "2018 - Present",
+      "description": " At Jersuma, I prepared payment receipts for when Jersuma Trading gets paid from other organizations. Collected, Organized and filed receipts, time sheets and withholdings associated with Jersuma Trading. I also worked in close contact with the accounting group of Jersuma Trading in order to collect and file documents for each fiscal year."
+    },
+    {
+      "title": "Addis Ababa Institute of Technology",
+      "timeline": "2019 - 2022",
+      "description": "Technology, I developed most of my current qualities. First and foremost I learned to code. I also further developed my communication and dedication skills. I also learned things like creative problem solving and teamwork throughout the projects given with every course."
+    },
+    {
+      "title": "Gebeya Talent",
+      "timeline": " 2021 - Present",
+      "description": "I have been in the Gebeya Talent pool since 2021. Gebeya was my first journey of application and interview. It is a great experience to have in my locker."
+    }
+  ],
+  "location":"Fairfield,Iowa, USA",
+  "email":"thomas2alexmech@gmail.com"
+}

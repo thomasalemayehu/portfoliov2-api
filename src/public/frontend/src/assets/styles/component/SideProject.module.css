@@ -1,0 +1,71 @@
+.container {
+  width: 100%;
+  margin: 0 8px 16px 0px;
+  min-height: 210px;
+  background: var(--primary-color);
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+  padding: 12px 16px;
+  transition: 1200ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  -webkit-transition: 1200ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  -moz-transition: 1200ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  -ms-transition: 1200ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  -o-transition: 1200ms cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.container > h6 {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-family: var(--heading-font);
+  letter-spacing: 1px;
+}
+
+.container > p {
+  margin-top: 24px;
+  font-size: 0.875rem;
+  letter-spacing: 0.1px;
+  line-height: 1.6;
+  font-family: var(--secondary-font);
+}
+.container svg {
+  height: 24px;
+  margin-right: 18px;
+  fill: var(--accent-color) !important;
+}
+
+.icon__container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+@media only screen and (min-width: 576px) {
+  .container {
+    width: 47%;
+  }
+  .container > h6 {
+    font-size: 1.15rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    width: 31%;
+  }
+  .container > h6 {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (min-width: 1401px) {
+  .container {
+    width: 24%;
+  }
+  .container > h6 {
+    font-size: 1.22rem;
+  }
+}
+
+.container:hover {
+  border: 0.25px solid var(--accent-color);
+}

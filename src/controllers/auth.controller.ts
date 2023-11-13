@@ -48,27 +48,29 @@ class AuthController {
   }
 
   public async loginUser(req: Request, res: Response): Promise<void> {
+
     const { email, password }: { email: string; password: string } = req.body;
-
+    
     if (!email)
-      throw new MissingRequiredAttribute("Email is required to login");
-    else if (!password)
-      throw new MissingRequiredAttribute("Password is required to login");
+    throw new MissingRequiredAttribute("Email is required to login");
+  else if (!password)
+  throw new MissingRequiredAttribute("Password is required to login");
 
-    Validator.validateEmail(email);
-    Validator.validatePassword(password);
+Validator.validateEmail(email);
+Validator.validatePassword(password);
 
-    const possibleUser = await Prisma.getInstance().user.findFirst({
-      where: { email: email },
-    });
+const possibleUser = await Prisma.getInstance().user.findFirst({
+  where: { email: email },
+});
 
-    if (!possibleUser)
-      throw new InvalidCredentials("Invalid email and/or password");
+if (!possibleUser)
+throw new InvalidCredentials("Invalid email and/or password");
 
-    const passwordMatch = await Bcrypt.compare(password, possibleUser.password);
+const passwordMatch = await Bcrypt.compare(password, possibleUser.password);
 
-    if (!passwordMatch)
-      throw new InvalidCredentials("Invalid email and/or password");
+console.log("Heree Login");
+if (!passwordMatch)
+throw new InvalidCredentials("Invalid email and/or password");
 
     const token = await JsonWebToken.getToken({
       id: possibleUser.id,

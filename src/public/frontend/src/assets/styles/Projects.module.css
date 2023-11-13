@@ -1,0 +1,25 @@
+.container {
+  min-height: 100vh;
+  margin-top: 10%;
+}
+
+.container > h3 {
+  color: var(--accent-color);
+  font-size: 2.2em;
+  font-family: "SF Mono", serif;
+  letter-spacing: 2px;
+  padding-bottom: 45px;
+}
+
+.container > h4 {
+  color: var(--accent-color);
+  font-size: 1.5em;
+  font-family: "SF Mono", serif;
+  letter-spacing: 2px;
+  padding-bottom: 45px;
+}
+
+.mentionContainer {
+  display: flex;
+  flex-wrap: wrap;
+}

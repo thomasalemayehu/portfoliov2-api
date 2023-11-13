@@ -1,0 +1,301 @@
+.about__page__container {
+  padding-top: 10%;
+  overflow: hidden;
+} 
+
+.about__page__inner__container {
+  padding-bottom: 5%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.about__page__left {
+  width: 100%;
+  position: relative;
+  background: url("/img/Thomas-Mechessa.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 240px;
+}
+
+.about__page__image { 
+  width: 320px;
+  max-height: 400px;
+  height: auto;
+  position: absolute;
+  object-fit: contain;
+}
+
+.about__page__right {
+  padding: 15% 0px;
+}
+
+.about__page__right h3 {
+  color: var(--accent-color);
+  font-size: 2.2em;
+  font-family: "SF Mono", serif;
+  letter-spacing: 2px;
+}
+
+.about__page__right p {
+  padding-top: 16px;
+
+  margin-bottom: 50px;
+
+  line-height: 1.6;
+  font-family: var(--secondary-font);
+  font-size: 1em;
+  letter-spacing: 1px;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  min-height: 150px;
+  margin-top: 100px;
+  overflow: hidden;
+  padding: 0px;
+  padding-bottom: 15%;
+}
+
+.timeline__title {
+  color: var(--accent-color);
+  font-weight: bold;
+  font-family: var(--heading-font);
+  font-size: var(--title-font-size);
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+  line-height: 1.6;
+  font-size: 4rem;
+}
+.timeline__content{
+    font-family: var(--secondary-font);
+}
+@media only screen and (min-width: 351px) and (max-width: 576px) {
+  .about__page__left {
+    padding-top: 36px;
+    width: 80%;
+    height: 320px;
+  }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .about__page__inner__container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .about__page__left {
+    width: 70%;
+    height: 360px;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .about__page__inner__container {
+    width: 100%;
+  }
+  .about__page__left {
+    width: 60%;
+    height: 380px;
+  }
+  .timeline__title {
+    font-size: 1.3em;
+    letter-spacing: 1.5px;
+  }
+  .timeline__time__span {
+    font-size: 0.85em;
+  }
+  .timeline__content {
+    font-size: 0.95em;
+  }
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .about__page__inner__container {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0%;
+  }
+  .about__page__left {
+    width: 45%;
+    margin-right: 5%;
+    position: relative;
+    /* background: url("../public/assets/images/My-image.JPG"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 460px;
+  }
+  .about__page__right {
+    width: 50%;
+  }
+
+  .timeline__title {
+    font-size: 1.4em;
+    letter-spacing: 1.5px;
+  }
+  .timeline__time__span {
+    font-size: 0.9em;
+  }
+  .timeline__content {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+  .about__page__inner__container {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0%;
+  }
+  .about__page__left {
+    width: 40%;
+    margin-right: 5%;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 480px;
+  }
+  .about__page__right {
+    width: 55%;
+  }
+  .timeline {
+    padding: 0 24px;
+  }
+  .timeline__title {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media only screen and (min-width: 1401px) {
+  .about__page__inner__container {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0%;
+  }
+  .about__page__left {
+    width: 35%;
+    margin-right: 5%;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 520px;
+  }
+  .about__page__right {
+    width: 60%;
+  }
+  .timeline__title {
+    font-size: 1.6em;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+  }
+  .about__page__inner__container {
+    flex-direction: row;
+    align-items: center;
+  }
+  .about__page__border {
+    width: 400px;
+    height: 510px;
+    transform: translate(-15px, 30px);
+    -webkit-transform: translate(-15px, 30px);
+    -moz-transform: translate(-15px, 30px);
+    -ms-transform: translate(-15px, 30px);
+    -o-transform: translate(-15px, 30px);
+  }
+  .about__page__image {
+    width: 460px;
+    min-height: 510px;
+    object-fit: contain;
+  }
+  .about__page__right {
+    padding: 15% 70px;
+  }
+  .about__page__right {
+    padding: 8% 50px;
+  }
+  .timeline {
+    padding: 0 55px;
+  }
+}
+/* Loading Animation */
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+
+
+/* Loading Styles */
+.loader__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  background: var(--accent-color);
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+
+.loader {
+  color: var(--accent-color);
+  text-indent: -9999em;
+  margin: 88px auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: "";
+}
+
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.loader:after {
+  left: 1.5em;
+}
