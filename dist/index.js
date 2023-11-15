@@ -19,6 +19,7 @@ const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8000;
 const error_middleware_1 = __importDefault(require("./middleware/error.middleware"));
 const routeNotFound_middleware_1 = __importDefault(require("./middleware/routeNotFound.middleware"));
+const path_1 = __importDefault(require("path"));
 // use middlewares
 app.use(rate_config_1.default);
 app.use((0, cors_1.default)());
@@ -27,9 +28,8 @@ app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.static("./src/public"));
 app.use(express_1.default.json({}));
 app.use(express_1.default.urlencoded({ extended: true }));
-app.post("/", (req, res) => {
-    console.log(req.files);
-    res.status(200).send({ message: "Server is live" });
+app.get("/", (req, res) => {
+    res.status(200).sendFile(path_1.default.join(__dirname, "../src/public/frontend/dist/index.html"));
 });
 app.use("/auth", auth_routes_1.default);
 app.use("/projects", project_routes_1.default);

@@ -19,6 +19,7 @@ import errorMiddleware from "./middleware/error.middleware";
 import routeNotFoundMiddleware from "./middleware/routeNotFound.middleware";
 import filesProcessorMiddleware from "./middleware/fileProcessor.middleware";
 import authenticationMiddleware from "./middleware/authentication.middleware";
+import path from "path";
 // use middlewares
 app.use(rateLimiter);
 app.use(cors());
@@ -29,11 +30,10 @@ app.use(express.static("./src/public"));
 app.use(express.json({}));
 app.use(express.urlencoded({ extended: true }));
 
-app.post(
+app.get(
   "/",
   (req: Request, res: Response) => {
-    console.log(req.files);
-    res.status(200).send({ message: "Server is live" });
+    res.status(200).sendFile(path.join(__dirname,"../src/public/frontend/dist/index.html"))
   }
 );
 
