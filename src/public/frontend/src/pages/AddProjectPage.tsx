@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import addProjectStyles from "../assets/styles/AddProject.module.css";
 import Button from "../components/Button";
 import axios from "axios";
-// import axios from "axios";
-import FormData from "form-data"
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useStorage } from "../hooks";
+import { UserInfo } from "../types/index";
+
 function AddProjectPage() {
+  const [user] = useStorage<UserInfo>("userInfo", {});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || !user.token) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
   const [leadImage, setLeadImage] = useState<FileWithPreview | null>(null);
 
   const [selectedImages, setSelectedImages] = useState<FileWithPreview[]>([]);
@@ -142,7 +153,6 @@ function AddProjectPage() {
         <Button
           label="Save"
           callback={async () => {
-            // e.preventDefault();
             const titleInput: HTMLInputElement | null = document.getElementById(
               "title"
             ) as HTMLInputElement | null;
@@ -164,8 +174,10 @@ function AddProjectPage() {
               !githubLinkInput ||
               !liveLinkInput ||
               !projectType
-            )
+            ) {
+              toast("Please fill out info");
               return;
+            }
 
             const formData = new FormData();
             formData.append("title", titleInput.value);
@@ -178,88 +190,58 @@ function AddProjectPage() {
             selectedImages.forEach((image: FileWithPreview) =>
               formData.append("selectedImages", image.file as File)
             );
-            formData.forEach((key,value)=>{
-              console.log(key,value)
-            })
 
             try {
+             
               const response = await axios.post(
                 "http://localhost:3000/projects/",
                 formData,
                 {
                   headers: {
                     "Content-Type": "multipart/form-data",
+                    "Authorization":`Bearer ${user.token}`
                   },
                 }
               );
 
-              console.log(response.data);
+              if (response.status === 201) {
+                titleInput.value = "";
+                descriptionInput.value = "";
+                techStackInput.value = "";
+                githubLinkInput.value = "";
+                liveLinkInput.value = "";
+                projectType.value = "";
+                setLeadImage(null);
+                setSelectedImages([]);
+                toast.success("Project Added Successfully", {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                });
+              }
             } catch (error) {
-              console.error("Error:", error);
+              toast.error("Could not add Added Successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
             }
-            // // const projectInfo: ProjectInfo = {
-            // //   title: titleInput.value,
-            // //   description: descriptionInput.value,
-            // //   techStack: techStackInput.value.split(","),
-            // //   githubLink: githubLinkInput.value,
-            // //   liveLink: liveLinkInput.value,
-            // //   projectType: projectType.value as "Main" | "Side",
-            // //   leadImage: leadImage?.file,
-            // //   selectedImages: selectedImages.map((image) => image.file),
-            // // };
-
-            // // Create a new FormData object
-            // e.prev;
-
-            // // Append form fields to the FormData object
-
-            // // Define the URL of your API endpoint
-            // const apiUrl = "http://localhost:3000";
-
-            // // Send the form data with the Fetch API
-            // fetch(apiUrl, {
-            //   method: "POST",
-            //   body: formData,
-            // })
-            //   .then((response) => {
-            //     if (!response.ok) {
-            //       throw new Error("Network response was not ok");
-            //     }
-            //     return response.json(); // Parse the response as JSON
-            //   })
-            //   .then((data) => {
-            //     // Handle the response data from the server
-            //     console.log(data);
-            //   })
-            //   .catch((error) => {
-            //     // Handle any errors that may occur during the request
-            //     console.error(error);
-            //   });
           }}
         />
       </div>
     </div>
   );
 }
-
-// function convertToFormData(projectInfo: ProjectInfo): FormData {
-//   const formData = new FormData();
-
-//   formData.append("title", projectInfo.title);
-//   formData.append("description", projectInfo.description);
-//   formData.append("projectType", projectInfo.projectType);
-//   formData.append("githubLink", projectInfo.githubLink);
-//   formData.append("liveLink", projectInfo.liveLink);
-//   projectInfo.selectedImages?.forEach((image) => {
-//     formData.append("selectedImages", image);
-//   });
-//   projectInfo.techStack.forEach((techStack) => {
-//     formData.append("techStack", techStack);
-//   });
-//   // formData.append("techStack", projectInfo.techStack);
-
-//   return formData;
-// }
 
 interface FileWithPreview {
   file: File;
@@ -270,17 +252,6 @@ interface ImagePreviewInfo {
   imagePath: string;
   altText: string;
 }
-
-// interface ProjectInfo {
-//   title: string;
-//   description: string;
-//   techStack: string[];
-//   githubLink: string;
-//   liveLink: string;
-//   leadImage?: File;
-//   selectedImages?: File[];
-//   projectType: "Main" | "Side";
-// }
 
 function ImagePreview({ imagePath, altText }: ImagePreviewInfo) {
   return (

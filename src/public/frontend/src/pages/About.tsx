@@ -86,6 +86,7 @@ function About() {
 
         {content.aboutPageTimeline.map((info) => (
           <AboutTimelineSection
+            key={info.title}
             title={info.title}
             timeline={info.timeline}
             description={info.description}

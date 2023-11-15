@@ -1,17 +1,29 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  postgres:
-    image: postgres:alpine
-    container_name: my_postgres_container
-    environment:
-      POSTGRES_DB: projects
-      POSTGRES_USER: projects
-      POSTGRES_PASSWORD: StrongPass123
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  # postgres:
+  #   image: postgres:14-alpine
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - ~/apps/postgres:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_PASSWORD=StrongPass123
+  #     - POSTGRES_USER=projects
+  #     - POSTGRES_DB=projects
 
-volumes:
-  postgres_data:
+
+  express-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./dist:/usr/src/app/dist
+    environment:
+      - NODE_ENV=development
+    command: ["npm", "start"]
+    # depends_on:
+    #   - postgres

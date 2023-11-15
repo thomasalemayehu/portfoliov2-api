@@ -8,7 +8,7 @@ import "express-async-errors";
 import rateLimiter from "./config/rate.config";
 import authRoutes from "./routes/auth.routes";
 import projectRoutes from "./routes/project.routes";
-import upload from "./config/multer.config";
+
 //For env File
 dotenv.config();
 
@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 8000;
 import errorMiddleware from "./middleware/error.middleware";
 import routeNotFoundMiddleware from "./middleware/routeNotFound.middleware";
 import filesProcessorMiddleware from "./middleware/fileProcessor.middleware";
+import authenticationMiddleware from "./middleware/authentication.middleware";
 // use middlewares
 app.use(rateLimiter);
 app.use(cors());

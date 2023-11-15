@@ -21,14 +21,16 @@ class ProjectController {
   ): Promise<void> {
     const { verifiedUserId } = req;
 
-    if (!verifiedUserId)
-      throw new MissingRequiredAttribute("User Id is required to get projects");
-
-    const projects = await Prisma.getInstance().project.findMany({
-      where: {
-        ownerId: verifiedUserId,
-      },
-    });
+    let projects;
+    if (!verifiedUserId) {
+      projects = await Prisma.getInstance().project.findMany({});
+    } else {
+      projects = await Prisma.getInstance().project.findMany({
+        where: {
+          ownerId: verifiedUserId,
+        },
+      });
+    }
 
     res.status(200).json(projects);
   }
@@ -38,32 +40,27 @@ class ProjectController {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    let { verifiedUserId } = req.params;
-  
+    let { verifiedUserId } = req;
+
     const imageFiles = req.files as { selectedImages: any; leadImage: any };
 
-    console.log(imageFiles);
-
     let imageLinks: Array<string> = [];
-    let leadImage:string = "";
-    if (imageFiles) {
-      imageLinks = imageFiles.selectedImages.map((image: any) => `uploads/${image.filename}`);
-      leadImage = `uploads/${imageFiles.leadImage.filename}`;
+    let leadImage: string = "";
+
+    if (imageFiles.leadImage) {
+      leadImage = `uploads/${imageFiles.leadImage[0].filename}`;
     }
-    verifiedUserId = "closm76tm0000uv39nvwvbhjr";
+    if (imageFiles.selectedImages) {
+      imageLinks = imageFiles.selectedImages.map(
+        (image: any) => `uploads/${image.filename}`
+      );
+    }
     if (!verifiedUserId)
       throw new MissingRequiredAttribute("User Id is required to add projects");
 
-    const {
-      title,
-      description,
-      techStack,
-      githubLink,
-      liveLink,
-      projectType,
-    } = req.body;
+    const { title, description, techStack, githubLink, liveLink, projectType } =
+      req.body;
 
-    console.log(techStack);
     if (!title)
       throw new MissingRequiredAttribute("Title is required to add projects");
     else if (!description)
@@ -98,7 +95,7 @@ class ProjectController {
       },
     });
 
-    res.status(201).json(newProject);
+    res.status(201).json("newProject");
   }
 
   public async getProject(
@@ -108,19 +105,28 @@ class ProjectController {
     const { verifiedUserId } = req;
     const { projectId } = req.params;
 
+    console.log(projectId)
+
+    let project;
+
     if (!verifiedUserId)
-      throw new MissingRequiredAttribute("User Id is required to get projects");
+      project = await Prisma.getInstance().project.findFirst({
+        where: {
+          id: projectId,
+        },
+      });
     else if (!projectId)
       throw new MissingRequiredAttribute(
         "Project Id is required to get projects"
       );
-
-    const project = await Prisma.getInstance().project.findFirst({
-      where: {
-        id: projectId,
-        ownerId: verifiedUserId,
-      },
-    });
+    else {
+      project = await Prisma.getInstance().project.findFirst({
+        where: {
+          id: projectId,
+          ownerId: verifiedUserId,
+        },
+      });
+    }
 
     res.status(200).json(project);
   }

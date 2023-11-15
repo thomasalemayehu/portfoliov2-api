@@ -1,16 +1,29 @@
+import { useNavigate } from "react-router-dom";
 import mentionsStyle from "../assets/styles/component/SideProject.module.css"
 
 
-function MentionCard({title, description, github, external_link }) {
+function MentionCard({projectInfo}) {
+  const navigate = useNavigate();
+   const { id, title,shortDescription, githubLink, liveLink } =
+     projectInfo;
   return (
     <div className={mentionsStyle.container}>
       {/* title */}
       <h6>{title}</h6>
-      <p>{description}</p>
+      <p>{shortDescription}</p>
 
       <div className={mentionsStyle.icon__container}>
+        <div
+          onClick={() => {
+            navigate(`/project/detail/${id}`);
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 512.4">
+            <path d="M330.6 302.5c8.2 0 14.9 6.6 14.9 14.8 0 8.1-6.7 14.7-15 14.7H109.9c-8.2 0-15-6.6-15-14.7 0-8.2 6.8-14.8 15-14.8h220.8zM440.3 61.3h19c11.2 0 21.4 4.6 28.7 12l1 1c6.8 7.3 11 17 11 27.7v369.7a40.6 40.6 0 0 1-40.7 40.7h-359a40.6 40.6 0 0 1-28.6-12h-.1a40.7 40.7 0 0 1-12-28.7v-20.6H40.8A40.7 40.7 0 0 1 0 410.4V40.7A40.6 40.6 0 0 1 40.7 0h359c11.1 0 21.3 4.6 28.7 12l1 1c6.7 7.3 11 17 11 27.7v20.6zm-369.5 360a14.8 14.8 0 0 1 3.8-.6c1.3 0 2.6.2 3.8.5h321.2c3 0 5.7-1.2 7.6-3.2 2-1.9 3.2-4.6 3.2-7.6V40.7c0-2.7-1-5.2-2.6-7l-.6-.6c-2-2-4.6-3.2-7.6-3.2H40.7c-3 0-5.7 1.2-7.6 3.2a10.7 10.7 0 0 0-3.2 7.6v369.7c0 3 1.2 5.7 3.2 7.6a10.7 10.7 0 0 0 7.6 3.2h30.1zM89.6 451v20.6a10.7 10.7 0 0 0 10.8 10.8h358.9c3 0 5.6-1.2 7.6-3.2 2-1.9 3.2-4.6 3.2-7.6V102c0-2.7-1-5.2-2.7-7l-.5-.6c-2-2-4.7-3.2-7.6-3.2h-19v319.2a40.7 40.7 0 0 1-40.7 40.8h-310zm241-332c8.2 0 14.9 6.6 14.9 14.8 0 8.1-6.7 14.7-15 14.7H109.9c-8.2 0-15-6.6-15-14.7 0-8.2 6.8-14.8 15-14.8h220.8zm0 91.7a14.8 14.8 0 1 1 0 29.5H109.8c-8.2 0-15-6.6-15-14.7s6.8-14.8 15-14.8h220.8z" />
+          </svg>
+        </div>
         {/* Github Icon */}
-        <a href={github} target="__blank">
+        <a href={githubLink} target="__blank">
           <svg
             version="1.0"
             xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +34,8 @@ function MentionCard({title, description, github, external_link }) {
         </a>
 
         {/* External Icon */}
-        {external_link && (
-          <a href={external_link} target="__blank">
+        {liveLink && (
+          <a href={liveLink} target="__blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -256 1850 1850">
               <path d="M1438.4 819v320q0 119-84.5 203.4-84.5 84.5-203.5 84.5h-832q-119 0-203.5-84.5T30.4 1139V307q0-119 84.5-203.5T318.4 19h704q14 0 23 9t9 23v64q0 14-9 23t-23 9h-704q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113V819q0-14 9-23t23-9h64q14 0 23 9t9 23zm384-864v512q0 26-19 45t-45 19q-26 0-45-19l-176-176-652 652q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l652-652-176-176q-19-19-19-45t19-45q19-19 45-19h512q26 0 45 19t19 45z" />
             </svg>
